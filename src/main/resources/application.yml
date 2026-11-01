@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  shutdown: graceful
+spring:
+  application:
+    name: relay
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/relay}
+    username: ${DB_USER:relay}
+    password: ${DB_PASSWORD:relay}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+relay:
+  jwt:
+    secret: ${JWT_SECRET:change-this-secret-to-a-long-random-string-of-at-least-32-bytes}
+    ttl-minutes: 720
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
